@@ -25,7 +25,7 @@ snap alias microk8s.kubectl kubectl
 ## Install Minio
 Create a deployment containing a single instance of Minio:
 ```
-kubectl create -f https://gist.githubusercontent.com/alahiff/0b065d930a56f4fc4c3ac8f078499096/raw/9d696171a5bab40008f6373bd381f5a5e8990be1/minio-standalone-deployment.yaml
+kubectl create -f https://raw.githubusercontent.com/alahiff/piezo/master/minio-standalone-deployment.yaml
 ```
 After a little while you should have a running Minio pod, e.g.
 ```
@@ -35,7 +35,7 @@ minio-577ddb5db8-lfjwg   1/1     Running   0          18m
 ```
 Now run the following to create a service (i.e. a way of accessing Minio):
 ```
-kubectl create -f https://gist.githubusercontent.com/alahiff/0b065d930a56f4fc4c3ac8f078499096/raw/9d696171a5bab40008f6373bd381f5a5e8990be1/minio-standalone-service.yaml
+kubectl create -f https://raw.githubusercontent.com/alahiff/piezo/master/minio-standalone-service.yaml
 ```
 You can run the following command to see Minio's IP address:
 ```
