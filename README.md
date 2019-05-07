@@ -1,4 +1,5 @@
 # Piezo deployment
+Here we deploy a Kubernetes cluster on a single VM and deploy piezo on this cluster. Minio is also run on the Kubernetes cluster.
 
 ## Create a VM
 Create a Ubuntu Bionic VM.
