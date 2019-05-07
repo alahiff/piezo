@@ -22,7 +22,7 @@ Run the following to create an alias for `kubectl`:
 snap alias microk8s.kubectl kubectl
 ```
 
-## Install Minio
+## Install a Minio server
 Create a deployment containing a single instance of Minio:
 ```
 kubectl create -f https://raw.githubusercontent.com/alahiff/piezo/master/minio-standalone-deployment.yaml
@@ -43,6 +43,24 @@ You can run the following command to see Minio's IP address:
 NAME            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
 kubernetes      ClusterIP   10.152.183.1     <none>        443/TCP    179m
 minio-service   ClusterIP   10.152.183.149   <none>        9000/TCP   18m
+```
+
+## Install the Minio client
+Download the client:
+```
+wget https://dl.min.io/client/mc/release/linux-amd64/mc
+```
+Create an environment variable specifying how to access the Minio server:
+```
+export MC_HOST_piezo=http://minio:minio123@10.152.183.149:9000
+```
+Run:
+```
+./mc ls piezo
+```
+Create a bucket called `piezo`:
+```
+./mc mb piezo/piezo
 ```
 
 ## Install Helm
