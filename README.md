@@ -53,6 +53,8 @@ minio-service   ClusterIP   10.152.183.149   <none>        9000/TCP   18m
 In this case it will be possible to access Minio from within the Kubernetes cluster and from the host using the IP address `10.152.183.149`. In order to access Minio externally an ingress controller is required, but for the moment this is not necessary.
 
 ## Create a secret containing the Minio credentials
+A secret containing the access key and secret key is required by piezo so that jobs can read input files and write output to Minio using S3.
+
 Copy the following into a file `minio-secret.yaml`:
 ```
 apiVersion: v1
