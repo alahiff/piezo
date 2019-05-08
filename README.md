@@ -2,7 +2,7 @@
 Here we deploy a Kubernetes cluster on a single VM and deploy piezo on this cluster. Minio is also run on the Kubernetes cluster.
 
 ## Create a VM
-Create a Ubuntu Bionic VM.
+Create a Ubuntu Bionic VM with at least 4 cores and 4 GB memory.
 
 ## Install Kubernetes
 [MicroK8s](https://microk8s.io/) is a very quick and easy way install Kubernetes on a single VM for testing. Run:
