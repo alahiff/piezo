@@ -160,10 +160,47 @@ kubectl create clusterrolebinding spark-role --clusterrole=edit --serviceaccount
 ```
 
 ## Deploy the piezo web app
+### Configuration
+An example configuration file is provided in `piezo/piezo_web_app/PiezoWebApp`. An example is also here:  https://raw.githubusercontent.com/alahiff/piezo/master/configuration.ini. Create a copy of this file called `configuration.ini` and then run the following to create a ConfigMap:
+```
+kubectl create configmap piezo-web-app-config --from-file=configuration.ini
+```
+
+### Validation rules
+An example validation rules JSON file is also provided in `piezo/piezo_web_app/PiezoWebApp` and an example is also here: https://raw.githubusercontent.com/alahiff/piezo/master/validation_rules.json. Create a copy of this file called `validation_rules.json` and make any required modifications. At the very least the container image name will need to be changed, then run:
+```
+kubectl create configmap validation-rules --from-file=validation_rules.json
+```
+
+### Deployment
+Download a YAML file containing a deployment and service for the piezo web app:
+```
+wget https://github.com/alahiff/piezo/blob/master/piezo-deploy-svc.yaml
+```
+Make any changes as necessary, e.g. for the web app container image name. Then run:
+```
+kubectl -f piezo-deploy-svc.yaml
+```
+
+Now check that the container is running. After a while `kubectl get pods` should look something like:
+```
+NAME                                                              READY   STATUS    RESTARTS   AGE
+minio-577ddb5db8-lfjwg                                            1/1     Running   0          5d19h
+piezo-web-app-5fd865c769-x2fsv                                    1/1     Running   0          20h
+...
+```
 
 
 ## Using the piezo web app
-In the following examples the IP address of the piezo server should of course be changed as appropriate.
+In the following examples the IP address of the piezo server should of course be changed as appropriate. To find out what IP address to use, run:
+```
+kubectl get svc piezo-app-service
+```
+which will give something like:
+```
+NAME                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+piezo-app-service   ClusterIP   10.152.183.23   <none>        8888/TCP   20h
+```
 
 ### Basic test that it's alive
 ```
