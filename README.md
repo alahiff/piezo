@@ -161,6 +161,21 @@ kubectl apply -f spark-rbac.yaml
 kubectl create clusterrolebinding spark-role --clusterrole=edit --serviceaccount=default:spark --namespace=default
 ```
 
+You can check that the Spark operator pod is running:
+```
+kubectl get pods --namespace=spark-operator
+```
+which should give, for example:
+```
+NAME                                           READY   STATUS    RESTARTS   AGE
+mean-squirrel-sparkoperator-77bd58cf5d-q72ff   1/1     Running   0          24h
+```
+To look at the logs from the Spark operator, run for example:
+```
+kubectl logs -f --namespace=spark-operator mean-squirrel-sparkoperator-77bd58cf5d-q72ff
+```
+where the pod name should be replaced as necessary.
+
 ## Deploy the piezo web app
 ### Configuration
 An example configuration file is provided in `piezo/piezo_web_app/PiezoWebApp`. An example is also here:  https://raw.githubusercontent.com/alahiff/piezo/master/configuration.ini. Create a copy of this file called `configuration.ini` and then run the following to create a ConfigMap:
