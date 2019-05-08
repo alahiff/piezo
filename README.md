@@ -147,6 +147,16 @@ In the following examples the IP address of the piezo server should of course be
 {"status": "success", "data": {"running": "true"}}
 ```
 
+### Submit a job
+Download the test script which calculates pi:
+```
+wget https://raw.githubusercontent.com/ukaea/piezo/2544c9176b5d93b6c0af4103d97674c30a41ab6b/SystemTests/roles/example_scripts/files/pi.py
+```
+and copy it to Minio:
+```
+./mc cp pi.py piezo/piezo/inputs/
+```
+
 ### List jobs
 ```
 curl -X GET -H "Content-Type: application/json" -d '{}' http://10.152.183.23:8888/piezo/getjobs
