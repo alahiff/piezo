@@ -21,8 +21,14 @@ Run the following to create an alias for `kubectl`:
 ```
 snap alias microk8s.kubectl kubectl
 ```
+Now standard `kubectl` commands can be run, e.g. to see a list of all running pods in all namespaces:
+```
+kubectl get pods --all-namespaces
+```
 
 ## Install a Minio server
+Here we deploy a simple Minio server on Kubernetes. This should not be used in production! See https://docs.min.io/docs/deploy-minio-on-kubernetes.html for information on how to properly run Minio on Kubernetes.
+
 Create a deployment containing a single instance of Minio:
 ```
 kubectl create -f https://raw.githubusercontent.com/alahiff/piezo/master/minio-standalone-deployment.yaml
@@ -33,7 +39,7 @@ After a little while you should have a running Minio pod, e.g.
 NAME                     READY   STATUS    RESTARTS   AGE
 minio-577ddb5db8-lfjwg   1/1     Running   0          18m
 ```
-Now run the following to create a service (i.e. a way of accessing Minio):
+Now run the following to create a service (i.e. a way of accessing Minio with a stable IP):
 ```
 kubectl create -f https://raw.githubusercontent.com/alahiff/piezo/master/minio-standalone-service.yaml
 ```
@@ -44,8 +50,11 @@ NAME            TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
 kubernetes      ClusterIP   10.152.183.1     <none>        443/TCP    179m
 minio-service   ClusterIP   10.152.183.149   <none>        9000/TCP   18m
 ```
+In this case it will be possible to access Minio from within the Kubernetes cluster and from the host using the IP address `10.152.183.149`. In order to access Minio externally an ingress controller is required, but for the moment this is not necessary.
 
 ## Install the Minio client
+The client can be used to check that the Minio server is running and also for uploading any required files necessary for testing piezo.
+
 Download the client:
 ```
 wget https://dl.min.io/client/mc/release/linux-amd64/mc
@@ -54,18 +63,20 @@ Create an environment variable specifying how to access the Minio server:
 ```
 export MC_HOST_piezo=http://minio:minio123@10.152.183.149:9000
 ```
+Here we have also specified an alias `piezo`.
+
 Run:
 ```
 ./mc ls piezo
 ```
-Create a bucket called `piezo`:
+The first time this command is run some configuration files will be generated.
+Now create a bucket called `piezo`:
 ```
 ./mc mb piezo/piezo
 ```
 
 ## Install Helm
-Based on https://webcloudpower.com/use-kubernetics-locally-with-microk8s
-
+Based on https://webcloudpower.com/use-kubernetics-locally-with-microk8s. We use snap to install Helm by running a single command:
 ```
 snap install --classic helm
 helm init
@@ -74,9 +85,39 @@ After a little while check that it works:
 ```
 helm ls
 ```
-The "tiller-deploy" pod needs to be running for this to work. If necessary you can check this by running `kubectl get pods --all-namespaces`.
+The "tiller-deploy" pod needs to be running for this to work. If necessary you can check this by running:
+```
+kubectl get pods --all-namespaces
+```
+Initially the pod will be in the `creating` state but eventually should end up in the `running` state.
+
+## Build the container images
+The Docker images of course should be built on a machine with Docker installed. Firstly, clone the git repository:
+```
+git clone https://github.com/ukaea/piezo.git
+```
+Alternatively, the following images can be used:
+* Spark: alahiff/spark-piezo:latest
+* Piezo web app: alahiff/piezo-web-app:latest
+
+### Piezo web app
+Run the following to build and push the image to Docker Hub, replacing at least the username as appropriate:
+```
+cd piezo
+docker build -t alahiff/piezo-web-app:latest .
+docker push alahiff/piezo-web-app:latest
+```
+
+### Spark
+Run the following to build and push the image to Docker Hub, replacing at least the username as appropriate:
+```
+cd Spark
+docker build -t alahiff/spark-piezo:latest .
+docker push alahiff/spark-piezo:latest
+```
 
 ## Setup the priority class
+A priority class is used so that under high resource pressures the core piezo components are the last to go down, i.e. less important pods will be killed first.
 ```
 kubectl create -f piezo-priority-class.yaml
 ```
