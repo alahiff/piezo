@@ -70,7 +70,7 @@ and then run:
 ```
 kubectl apply -f minio-secret.yaml
 ```
-The access key and secret key specified in `minio-secret.yaml` are base64 encoded. To create then run e.g.:
+The access key and secret key specified in `minio-secret.yaml` are base64 encoded. To create them run e.g.:
 ```
 echo -n "<access_key>" | base64
 ```
