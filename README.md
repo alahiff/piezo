@@ -135,6 +135,9 @@ kubectl apply -f spark-rbac.yaml
 kubectl create clusterrolebinding spark-role --clusterrole=edit --serviceaccount=default:spark --namespace=default
 ```
 
+## Deploy the piezo web app
+
+
 ## Test the piezo web app
 ```
 # curl http://10.152.183.23:8888/piezo/
