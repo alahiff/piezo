@@ -244,6 +244,18 @@ curl -X POST -H "Content-Type: application/json" -d@demo-pi.json http://10.152.1
 ```
 curl -X GET -H "Content-Type: application/json" -d '{}' http://10.152.183.23:8888/piezo/getjobs
 ```
+Example output:
+```
+{
+   "status":"success",
+   "data":{
+      "message":"Found 1 spark jobs",
+      "spark_jobs":{
+         "python-pi-6c632":"SUBMITTED"
+      }
+   }
+}
+```
 
 ### Get the logs for a specific job
 ```
