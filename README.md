@@ -52,6 +52,28 @@ minio-service   ClusterIP   10.152.183.149   <none>        9000/TCP   18m
 ```
 In this case it will be possible to access Minio from within the Kubernetes cluster and from the host using the IP address `10.152.183.149`. In order to access Minio externally an ingress controller is required, but for the moment this is not necessary.
 
+## Create a secret containing the Minio credentials
+Copy the following into a file `minio-secret.yaml`:
+```
+apiVersion: v1
+kind: Secret
+metadata:
+ name: local-minio
+type: Opaque
+data:
+ accessKey: bWluaW8=
+ secretKey: bWluaW8xMjM=
+```
+and then run:
+```
+kubectl apply -f minio-secret.yaml
+```
+The access key and secret key specified in `minio-secret.yaml` are base64 encoded. To create then run e.g.:
+```
+echo -n "<access_key>" | base64
+```
+The example `minio-secret.yaml` above contains the access key and secret key specified above when we deployed the test Minio server.
+
 ## Install the Minio client
 The client can be used to check that the Minio server is running and also for uploading any required files necessary for testing piezo.
 
