@@ -190,6 +190,17 @@ piezo-web-app-5fd865c769-x2fsv                                    1/1     Runnin
 ...
 ```
 
+### Final steps
+Now download the following YAML file:
+```
+wget https://raw.githubusercontent.com/alahiff/piezo/master/piezo-extras.yaml
+```
+and replace all instances of `piezo-test01` with the hostname of your VM. Then run:
+```
+kubectl create -f piezo-extras.yaml
+```
+Note there is an error at the end which I haven't looked into it!
+
 
 ## Using the piezo web app
 In the following examples the IP address of the piezo server should of course be changed as appropriate. To find out what IP address to use, run:
@@ -203,6 +214,7 @@ piezo-app-service   ClusterIP   10.152.183.23   <none>        8888/TCP   20h
 ```
 
 ### Basic test that it's alive
+First we just run the most basic check to see if the piezo REST API is alive:
 ```
 # curl http://10.152.183.23:8888/piezo/
 {"status": "success", "data": {"running": "true"}}
