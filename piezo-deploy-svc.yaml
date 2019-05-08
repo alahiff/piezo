@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: piezo-web-app
+  labels:
+    run: piezo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: piezo
+  template:
+    metadata:
+      labels:
+        run: piezo
+    spec:
+      containers:
+      - name: piezo
+        image: alahiff/piezo-web-app:latest
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "0.5Gi"
+            cpu: "200m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 8888 # Port where the application is exposed on
+        volumeMounts:
+        - name: local-minio
+          mountPath: "/etc/secrets/"
+        - name: validation-rules
+          mountPath: "/etc/validation/" # DO NOT CHANGE WITHOUT ALSO UPDATING VALIDATION_RULES_PATH in run_piezo.py
+        - name: configuration
+          mountPath: "/etc/configuration/" # DO NOT CHANGE WITHOUT ALSO UPDATING CONFIGURATION_PATH in run_piezo.py
+      volumes:
+      - name: local-minio
+        secret:
+          secretName: local-minio
+          items:
+          - key: accessKey
+            path: access_key
+          - key: secretKey
+            path: secret_key
+      - name: validation-rules
+        configMap:
+          name: validation-rules
+          items:
+          - key: validation_rules.json
+            path: validation_rules.json
+      - name: configuration
+        configMap:
+          name: piezo-web-app-config
+          items:
+          - key: configuration.ini
+            path: configuration.ini
+      priorityClassName: piezo-essential
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: piezo-app-service
+  namespace: default
+  labels:
+    piezo-status: test
+spec:
+  selector:
+    run: piezo
+  ports:
+  - name: web
+    port: 8888 # Port where the application is exposed on in the container (to be picked up by ingress)
