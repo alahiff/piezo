@@ -218,6 +218,21 @@ kubectl create -f piezo-extras.yaml
 ```
 Note there is an error at the end which I haven't looked into it!
 
+At this point you will see that there are a number of pods running:
+```
+root@piezo-test01:~# kubectl get pods --all-namespaces
+NAMESPACE        NAME                                                              READY   STATUS    RESTARTS   AGE
+default          minio-577ddb5db8-lfjwg                                            1/1     Running   0          5d19h
+default          piezo-web-app-5fd865c769-x2fsv                                    1/1     Running   0          21h
+default          pugnacious-termite-nginx-ingress-controller-798869f457-llqv5      1/1     Running   0          21h
+default          pugnacious-termite-nginx-ingress-default-backend-8c67bf95dc6cl9   1/1     Running   0          21h
+kube-system      heapster-v1.5.2-6b5d7b57f9-8kv7g                                  4/4     Running   0          5d21h
+kube-system      kube-dns-6bfbdd666c-2wt8f                                         3/3     Running   0          5d21h
+kube-system      kubernetes-dashboard-6fd7f9c494-5kpjx                             1/1     Running   0          5d21h
+kube-system      monitoring-influxdb-grafana-v4-78777c64c8-c855g                   2/2     Running   0          5d21h
+kube-system      tiller-deploy-c48485567-j7lwn                                     1/1     Running   0          24h
+spark-operator   mean-squirrel-sparkoperator-77bd58cf5d-q72ff                      1/1     Running   0          24h
+```
 
 ## Using the piezo web app
 In the following examples the IP address of the piezo server should of course be changed as appropriate. To find out what IP address to use, run:
