@@ -1,0 +1,8 @@
+{
+        "name":"python-pi",
+        "language":"Python",
+        "python_version":"2",
+        "path_to_main_app_file":"s3a://piezo/inputs/pi.py",
+        "label":"test",
+        "arguments": ["10"]
+}
