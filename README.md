@@ -149,12 +149,12 @@ In the following examples the IP address of the piezo server should of course be
 
 ### List jobs
 ```
-curl -X GET  -H "Content-Type: application/json" -d '{}' http://10.152.183.23:8888/piezo/getjobs
+curl -X GET -H "Content-Type: application/json" -d '{}' http://10.152.183.23:8888/piezo/getjobs
 ```
 
 ### Get the logs for a specific job
 ```
-curl -X GET  -H "Content-Type: application/json" -d '{"job_name":"python-pi-3b548"}' http://10.152.183.23:8888/piezo/getlogs
+curl -X GET -H "Content-Type: application/json" -d '{"job_name":"python-pi-3b548"}' http://10.152.183.23:8888/piezo/getlogs
 ```
 
 
