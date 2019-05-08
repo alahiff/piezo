@@ -156,6 +156,14 @@ and copy it to Minio:
 ```
 ./mc cp pi.py piezo/piezo/inputs/
 ```
+Download the piezo JSON:
+```
+wget https://raw.githubusercontent.com/alahiff/piezo/master/demo-pi.json
+```
+and submit the job to piezo:
+```
+curl -X POST -H "Content-Type: application/json" -d@demo-pi.json http://10.152.183.23:8888/piezo/submitjob
+```
 
 ### List jobs
 ```
@@ -167,6 +175,19 @@ curl -X GET -H "Content-Type: application/json" -d '{}' http://10.152.183.23:888
 curl -X GET -H "Content-Type: application/json" -d '{"job_name":"python-pi-3b548"}' http://10.152.183.23:8888/piezo/getlogs
 ```
 
-
-
+### Viewing log files for complete jobs
+Log files are copied to Minio and can be seen by running:
+```
+./mc ls piezo/piezo/outputs
+```
+Example output:
+```
+[2019-05-08 11:13:29 UTC]      0B python-pi-29aff/
+[2019-05-08 11:13:29 UTC]      0B python-pi-3b548/
+[2019-05-08 11:13:29 UTC]      0B python-pi-6879b/
+[2019-05-08 11:13:29 UTC]      0B python-pi-7394c/
+[2019-05-08 11:13:29 UTC]      0B python-pi-ee602/
+[2019-05-08 11:13:29 UTC]      0B python-pi-f2c80/
+```
+The output from each job is stored in a unique directory.
 
