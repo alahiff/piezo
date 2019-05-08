@@ -97,8 +97,8 @@ The Docker images of course should be built on a machine with Docker installed. 
 git clone https://github.com/ukaea/piezo.git
 ```
 Alternatively, the following images can be used:
-* Spark: alahiff/spark-piezo:latest
-* Piezo web app: alahiff/piezo-web-app:latest
+* Spark: `alahiff/spark-piezo:latest`
+* Piezo web app: `alahiff/piezo-web-app:latest`
 
 ### Piezo web app
 Run the following to build and push the image to Docker Hub, replacing at least the username as appropriate:
