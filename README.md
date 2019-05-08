@@ -147,11 +147,13 @@ kubectl create -f piezo-priority-class.yaml
 ```
 
 ## Install an ingress controller
+The ingress controller allows for external access to pods in the Kubernetes cluster.
 ```
 helm install stable/nginx-ingress --set controller.service.nodePorts.http=31856 --set controller.priorityClassName=piezo-essential --set defaultBackend.priorityClassName=piezo-essential
 ```
 
 ## Install the Spark operator
+Run the following to install the Spark operator (the Spark operator is a long-running pod which creates Spark driver pods and executors as necessary):
 ```
 helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
 helm install incubator/sparkoperator --namespace spark-operator --set enableWebhook=true --set metrics-labels=app_type
