@@ -29,6 +29,12 @@ kubectl get pods --all-namespaces
 ## Install a Minio server
 Here we deploy a simple Minio server on Kubernetes. This should not be used in production! See https://docs.min.io/docs/deploy-minio-on-kubernetes.html for information on how to properly run Minio on Kubernetes.
 
+For testing purposes only we will have Minio use a directory on the host for storage. Firstly create this directory:
+```
+mkdir /data
+```
+Kubernetes will mount this inside the Minio container.
+
 Create a deployment containing a single instance of Minio:
 ```
 kubectl create -f https://raw.githubusercontent.com/alahiff/piezo/master/minio-standalone-deployment.yaml
