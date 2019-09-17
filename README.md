@@ -202,7 +202,7 @@ wget https://raw.githubusercontent.com/alahiff/piezo/master/piezo-deploy-svc.yam
 ```
 Make any changes as necessary, e.g. for the web app container image name. Then run:
 ```
-kubectl -f piezo-deploy-svc.yaml
+kubectl create -f piezo-deploy-svc.yaml
 ```
 
 Now check that the container is running. After a while `kubectl get pods` should look something like:
