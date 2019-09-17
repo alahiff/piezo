@@ -198,7 +198,7 @@ kubectl create configmap validation-rules --from-file=validation_rules.json
 ### Deployment
 Download a YAML file containing a deployment and service for the piezo web app:
 ```
-wget https://github.com/alahiff/piezo/blob/master/piezo-deploy-svc.yaml
+wget https://raw.githubusercontent.com/alahiff/piezo/master/piezo-deploy-svc.yaml
 ```
 Make any changes as necessary, e.g. for the web app container image name. Then run:
 ```
